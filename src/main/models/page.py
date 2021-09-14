@@ -23,6 +23,7 @@ class PageBlock(TimeStampedModel):
     content_video = models.ForeignKey(
         VideoContent,
         verbose_name='Видео',
+        related_name='blocks',
         null=True,
         blank=True,
         on_delete=models.CASCADE
@@ -31,6 +32,7 @@ class PageBlock(TimeStampedModel):
     content_audio = models.ForeignKey(
         AudioContent,
         verbose_name='Аудио',
+        related_name='blocks',
         null=True,
         blank=True,
         on_delete=models.CASCADE
@@ -39,6 +41,7 @@ class PageBlock(TimeStampedModel):
     content_text = models.ForeignKey(
         TextContent,
         verbose_name='Текст',
+        related_name='blocks',
         null=True,
         blank=True,
         on_delete=models.CASCADE
