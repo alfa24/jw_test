@@ -4,7 +4,6 @@ from kombu import Queue, Exchange
 
 from .base import TIME_ZONE, REDIS_URL
 
-ENDPOINT = os.getenv('YMQ_ENDPOINT', '')
 CELERY_BROKER_URL = REDIS_URL
 CELERY_BROKER_TRANSPORT_OPTIONS = {
     'is_secure': True,
@@ -14,6 +13,7 @@ CELERY_ACCEPT_CONTENT = {"json"}
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
+CELERY_TASK_ALWAYS_EAGER = os.getenv('CELERY_TASK_ALWAYS_EAGER', False) in ['true', 'True']
 
 CELERY_TASK_DEFAULT_QUEUE = 'default'
 CELERY_QUEUES = (
