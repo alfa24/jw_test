@@ -7,19 +7,19 @@ from main.models import Page, PageBlock, VideoContent, AudioContent, TextContent
 class ContentVideoSerializer(serializers.ModelSerializer):
     class Meta:
         model = VideoContent
-        fields = ['id', 'title', 'video', 'subtitle']
+        fields = ['id', 'title', 'counter', 'video', 'subtitle']
 
 
 class ContentAudioSerializer(serializers.ModelSerializer):
     class Meta:
         model = AudioContent
-        fields = ['id', 'title', 'audio', 'bitrate']
+        fields = ['id', 'title', 'counter', 'audio', 'bitrate']
 
 
 class ContentTextSerializer(serializers.ModelSerializer):
     class Meta:
         model = TextContent
-        fields = ['id', 'title', 'text']
+        fields = ['id', 'title', 'counter', 'text']
 
 
 class PageBlockSerializer(serializers.ModelSerializer):

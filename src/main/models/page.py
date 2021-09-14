@@ -3,6 +3,7 @@ from django.db import models
 from model_utils.models import TimeStampedModel
 
 from main.models import VideoContent, AudioContent, TextContent
+from main.models.content import BaseContent
 
 
 class Page(TimeStampedModel):
@@ -47,8 +48,18 @@ class PageBlock(TimeStampedModel):
         on_delete=models.CASCADE
     )
 
+    @classmethod
+    def get_content_fields(cls) -> list:
+        """Возвращает поля с контентом."""
+        return [x for x in cls._meta.fields if x.name.startswith('content_')]
+
+    @classmethod
+    def get_content_class_models(cls) -> list[BaseContent]:
+        """Возвращает классы моделей полей с контентом."""
+        return [x.related_model for x in cls.get_content_fields()]
+
     def clean_content(self):
-        content_fields = [x.name for x in self._meta.fields if x.name.startswith('content_')]
+        content_fields = [x.name for x in self.get_content_fields()]
         content_type = None
         errors = {}
         for field in content_fields:
