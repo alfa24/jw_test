@@ -17,3 +17,7 @@ class PageBlockInline(SortableInlineAdminMixin, admin.TabularInline):
 class PageAdmin(admin.ModelAdmin):
     exclude = []
     inlines = [PageBlockInline]
+    search_fields = [
+        'title__istartswith',
+        *[f'blocks__{x.name}__title__istartswith' for x in PageBlock.get_content_fields()]
+    ]
