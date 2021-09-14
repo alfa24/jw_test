@@ -1,11 +1,11 @@
-from .base import *
+from .base import *  # noqa
 
 try:
-    from .celery import *
+    from .celery import *  # noqa
 except ImportError:
     pass
 
 try:
-    from .local import *
+    from .local import *  # noqa
 except ImportError:
     pass

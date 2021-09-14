@@ -1,10 +1,4 @@
-from .content import VideoContent, AudioContent, TextContent
-from .page import PageBlock, Page
+from .content import AudioContent, TextContent, VideoContent
+from .page import Page, PageBlock
 
-__all__ = [
-    VideoContent,
-    AudioContent,
-    TextContent,
-    Page,
-    PageBlock
-]
+__all__ = [VideoContent, AudioContent, TextContent, Page, PageBlock]

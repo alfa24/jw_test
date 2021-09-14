@@ -4,7 +4,6 @@ from rest_framework.test import APIClient
 
 
 class DRFClient(APIClient):
-
     def get(self, *args, **kwargs):
         return self._api_call(
             "get", kwargs.get("expected_status_code", 200), *args, **kwargs
@@ -40,7 +39,7 @@ class DRFClient(APIClient):
         content = self._decode(response)
 
         assert (
-                response.status_code == expected
+            response.status_code == expected
         ), f"non-expected statuscode: {response.status_code}: {content}"
 
         return content

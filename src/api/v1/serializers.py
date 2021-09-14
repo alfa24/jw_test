@@ -1,25 +1,25 @@
 from django.urls import reverse
 from rest_framework import serializers
 
-from main.models import Page, PageBlock, VideoContent, AudioContent, TextContent
+from main.models import AudioContent, Page, PageBlock, TextContent, VideoContent
 
 
 class ContentVideoSerializer(serializers.ModelSerializer):
     class Meta:
         model = VideoContent
-        fields = ['id', 'title', 'counter', 'video', 'subtitle']
+        fields = ["id", "title", "counter", "video", "subtitle"]
 
 
 class ContentAudioSerializer(serializers.ModelSerializer):
     class Meta:
         model = AudioContent
-        fields = ['id', 'title', 'counter', 'audio', 'bitrate']
+        fields = ["id", "title", "counter", "audio", "bitrate"]
 
 
 class ContentTextSerializer(serializers.ModelSerializer):
     class Meta:
         model = TextContent
-        fields = ['id', 'title', 'counter', 'text']
+        fields = ["id", "title", "counter", "text"]
 
 
 class PageBlockSerializer(serializers.ModelSerializer):
@@ -29,21 +29,21 @@ class PageBlockSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PageBlock
-        fields = ['id', 'content_video', 'content_audio', 'content_text']
+        fields = ["id", "content_video", "content_audio", "content_text"]
 
 
 class PageListSerializer(serializers.ModelSerializer):
     absolute_url = serializers.SerializerMethodField()
 
     def get_absolute_url(self, obj):
-        url = reverse('api:pages-detail', args=(obj.id,))
-        request = self.context.get('request')
+        url = reverse("api:pages-detail", args=(obj.id,))
+        request = self.context.get("request")
         absolute_url = request.build_absolute_uri(url) if request else url
         return absolute_url
 
     class Meta:
         model = Page
-        fields = ['id', 'title', 'absolute_url']
+        fields = ["id", "title", "absolute_url"]
 
 
 class PageSerializer(serializers.ModelSerializer):
@@ -55,4 +55,4 @@ class PageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Page
-        fields = ['id', 'title', 'blocks']
+        fields = ["id", "title", "blocks"]

@@ -2,56 +2,58 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from model_utils.models import TimeStampedModel
 
-from main.models import VideoContent, AudioContent, TextContent
+from main.models import AudioContent, TextContent, VideoContent
 from main.models.content import BaseContent
 
 
 class Page(TimeStampedModel):
-    title = models.CharField('Заголовок', max_length=200)
+    title = models.CharField("Заголовок", max_length=200)
 
     def __str__(self):
-        return f'{self.title}'
+        return f"{self.title}"
 
     class Meta:
-        verbose_name = 'Страница'
-        verbose_name_plural = 'Страницы'
+        verbose_name = "Страница"
+        verbose_name_plural = "Страницы"
 
 
 class PageBlock(TimeStampedModel):
     custom_order = models.PositiveIntegerField(default=0, blank=False, null=False)
-    page = models.ForeignKey(Page, related_name='blocks', verbose_name='Страница', on_delete=models.CASCADE)
+    page = models.ForeignKey(
+        Page, related_name="blocks", verbose_name="Страница", on_delete=models.CASCADE
+    )
 
     content_video = models.ForeignKey(
         VideoContent,
-        verbose_name='Видео',
-        related_name='blocks',
+        verbose_name="Видео",
+        related_name="blocks",
         null=True,
         blank=True,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
     )
 
     content_audio = models.ForeignKey(
         AudioContent,
-        verbose_name='Аудио',
-        related_name='blocks',
+        verbose_name="Аудио",
+        related_name="blocks",
         null=True,
         blank=True,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
     )
 
     content_text = models.ForeignKey(
         TextContent,
-        verbose_name='Текст',
-        related_name='blocks',
+        verbose_name="Текст",
+        related_name="blocks",
         null=True,
         blank=True,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
     )
 
     @classmethod
     def get_content_fields(cls) -> list:
         """Возвращает поля с контентом."""
-        return [x for x in cls._meta.fields if x.name.startswith('content_')]
+        return [x for x in cls._meta.fields if x.name.startswith("content_")]
 
     @classmethod
     def get_content_class_models(cls) -> list[BaseContent]:
@@ -68,13 +70,15 @@ class PageBlock(TimeStampedModel):
                 continue
 
             if content_type:
-                errors[field] = ValidationError('Должен быть выбран только один вид контента.')
+                errors[field] = ValidationError(
+                    "Должен быть выбран только один вид контента."
+                )
             else:
                 content_type = field
 
         if not content_type:
             errors = {
-                x: ValidationError('Должен быть выбран хотя бы один вид контента.')
+                x: ValidationError("Должен быть выбран хотя бы один вид контента.")
                 for x in content_fields
             }
 
@@ -86,6 +90,6 @@ class PageBlock(TimeStampedModel):
         return super().full_clean(exclude, validate_unique)
 
     class Meta:
-        verbose_name = 'Блок'
-        verbose_name_plural = 'Блоки'
-        ordering = ['custom_order']
+        verbose_name = "Блок"
+        verbose_name_plural = "Блоки"
+        ordering = ["custom_order"]

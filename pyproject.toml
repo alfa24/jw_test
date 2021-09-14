@@ -23,6 +23,9 @@ pytest-freezegun = "^0.4.2"
 pytest-mock = "^3.6.1"
 
 [tool.poetry.dev-dependencies]
+flake8 = "^3.9.2"
+black = "^21.9b0"
+isort = "^5.9.3"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

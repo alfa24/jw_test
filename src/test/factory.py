@@ -4,7 +4,7 @@ from faker import Faker
 from mixer.backend.django import mixer
 
 if TYPE_CHECKING:
-    from main.models import VideoContent, AudioContent, TextContent, Page, PageBlock
+    from main.models import AudioContent, Page, PageBlock, TextContent, VideoContent
 
 
 class Factory:
@@ -27,5 +27,5 @@ class Factory:
         return mixer.blend("main.TextContent", counter=0, **kwargs)
 
     @classmethod
-    def page_block(cls, page: 'Page', **kwargs) -> "PageBlock":
+    def page_block(cls, page: "Page", **kwargs) -> "PageBlock":
         return mixer.blend("main.PageBlock", page=page, **kwargs)
