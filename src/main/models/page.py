@@ -18,7 +18,7 @@ class Page(TimeStampedModel):
 
 class PageBlock(TimeStampedModel):
     custom_order = models.PositiveIntegerField(default=0, blank=False, null=False)
-    page = models.ForeignKey(Page, verbose_name='Страница', on_delete=models.CASCADE)
+    page = models.ForeignKey(Page, related_name='blocks', verbose_name='Страница', on_delete=models.CASCADE)
 
     content_video = models.ForeignKey(
         VideoContent,
