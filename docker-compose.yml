@@ -1,0 +1,88 @@
+version: '3.4'
+
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    expose:
+      - 5432
+
+  redis:
+    image: "redis:alpine"
+    container_name: redis
+    restart: always
+    volumes:
+      - redis-data:/data
+
+
+  django:
+    build: .
+    image: django_admin
+    volumes:
+      - django-admin-static:/var/app/static/
+      - django-admin-media:/var/app/media/
+    env_file: .env
+    depends_on:
+      - postgres
+      - redis
+
+
+  celery_worker:
+    image: django_admin
+    restart: "always"
+    command:
+      - celery
+      - -A
+      - project.celery:app
+      - worker
+      - -Q
+      - low,default,high
+      - -l
+      - INFO
+    entrypoint: ""
+    env_file: .env
+    depends_on:
+      - django
+      - postgres
+      - redis
+
+  autotests:
+    image: django_admin
+    command:
+      - pytest
+    entrypoint: ""
+    env_file: .env
+    depends_on:
+      - postgres
+
+  runserver:
+    image: django_admin
+    restart: on-failure
+    env_file: .env
+    entrypoint: ""
+    command:
+      - python
+      - manage.py
+      - runserver
+      - 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    depends_on:
+      - django
+      - celery_worker
+
+
+volumes:
+  django-admin-static:
+    driver: local
+  django-admin-media:
+    driver: local
+  redis-data:
+    driver: local
+  pg_data:
+    driver: local
