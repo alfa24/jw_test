@@ -1,3 +1,4 @@
+from adminsortable2.admin import SortableInlineAdminMixin
 from django.contrib import admin
 
 from main.models import VideoContent, AudioContent, TextContent, Page, PageBlock
@@ -7,7 +8,7 @@ admin.site.register(AudioContent)
 admin.site.register(TextContent)
 
 
-class PageBlockInline(admin.TabularInline):
+class PageBlockInline(SortableInlineAdminMixin, admin.TabularInline):
     model = PageBlock
     extra = 0
 

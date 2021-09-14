@@ -12,6 +12,7 @@ django-model-utils = "^4.1.1"
 celery = "^5.1.2"
 psycopg2-binary = "^2.9.1"
 lorem = "^0.1.1"
+django-admin-sortable2 = "^1.0"
 
 [tool.poetry.dev-dependencies]
 
