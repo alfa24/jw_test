@@ -2,10 +2,10 @@ import os
 
 from kombu import Queue, Exchange
 
-from .base import TIME_ZONE
+from .base import TIME_ZONE, REDIS_URL
 
 ENDPOINT = os.getenv('YMQ_ENDPOINT', '')
-CELERY_BROKER_URL = 'sqs://{}'.format(ENDPOINT)
+CELERY_BROKER_URL = REDIS_URL
 CELERY_BROKER_TRANSPORT_OPTIONS = {
     'is_secure': True,
 }
@@ -23,8 +23,4 @@ CELERY_QUEUES = (
 )
 
 CELERY_BEAT_SCHEDULE = {
-    # 'renew_subscriptions_task': {
-    #     "task": 'billing.apps.subscriptions.tasks.renew_subscriptions_task',  # продление подписок
-    #     "schedule": 60.0  # каждые 60 сек
-    # },
 }

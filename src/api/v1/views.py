@@ -11,5 +11,5 @@ class PageViewsSet(viewsets.ReadOnlyModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
-        inc_counter_by_page_task(instance.id)
+        inc_counter_by_page_task.delay(instance.id)
         return super().retrieve(request, *args, **kwargs)
