@@ -9,6 +9,56 @@
 Сервер после запуска будет доступен по адресу http://0.0.0.0:8000  
 Админка http://0.0.0.0:8000/admin (Пароль и имя суперпользователя берутся из файла .env)
 
+## Примеры вызовов API  
+**Получить список страниц**
+GET http://0.0.0.0:8000/api/v1/pages/
+
+Ответ:
+```json
+{
+    "count": 2,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "id": 1,
+            "title": "Consectetur dolore est eius.",
+            "absolute_url": "http://0.0.0.0:8000/api/v1/pages/1/"
+        },
+        {
+            "id": 2,
+            "title": "Aliquam sed dolorem modi velit magnam.",
+            "absolute_url": "http://0.0.0.0:8000/api/v1/pages/2/"
+        }
+    ]
+}
+```
+
+**Просмотреть одну страницу**
+GET http://0.0.0.0:8000/api/v1/pages/2/
+
+Ответ:
+```json
+{
+    "id": 2,
+    "title": "Aliquam sed dolorem modi velit magnam.",
+    "blocks": [
+        {
+            "id": 7,
+            "content_video": null,
+            "content_audio": {
+                "id": 1,
+                "title": "Neque amet est velit.",
+                "counter": 0,
+                "audio": "http://0.0.0.0:8000/media/audio/test_audio.mp3",
+                "bitrate": 579
+            },
+            "content_text": null
+        },
+    ]
+}
+```  
+
 ## Описание задания
 
 Дана модель предметной области с сущностями:
